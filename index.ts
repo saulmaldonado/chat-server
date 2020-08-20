@@ -1,7 +1,6 @@
 import koa from 'koa';
 import { createServer } from 'http';
 import socketio, { Socket } from 'socket.io';
-import koaStatic from 'koa-static';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { config } from 'dotenv';
 
