@@ -1,12 +1,16 @@
 import koa from 'koa';
 import { createServer } from 'http';
 import socketio, { Socket } from 'socket.io';
+import koaStatic from 'koa-static';
+
 import events from './socketIoEvents';
 
 const app = new koa();
 
 const server = createServer(app.callback());
 const io = socketio(server);
+
+app.use(koaStatic(__dirname));
 
 io.on('connection', (socket: Socket) => {
   console.log('a new user connected');
@@ -17,6 +21,6 @@ io.on('connection', (socket: Socket) => {
 
 const port = process.env.PORT ?? 5000;
 
-server.listen(3000, () => {
+server.listen(port, () => {
   console.log(`listening on port ${port}...`);
 });
