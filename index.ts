@@ -46,10 +46,17 @@ const filterMessage = async (
 // io
 io.on('connection', async (socket: Socket) => {
   console.log('a new user connected');
-  socket.on(events.SEND_MESSAGE, async (message: string) => {
-    await rateLimit(socket);
-    await filterMessage(message, socket, io);
-  });
+  socket.on(
+    events.SEND_MESSAGE,
+    async (message: string | ArrayBuffer) => {
+      await rateLimit(socket);
+      if (typeof message === 'string') {
+        await filterMessage(message, socket, io);
+      } else {
+        io.emit(events.SEND_MESSAGE, { message, id: socket.id });
+      }
+    }
+  );
 });
 
 const port = process.env.PORT ?? 5000;
