@@ -36,7 +36,7 @@ const filterMessage = async (
   socket: Socket,
   io: socketio.Server
 ) => {
-  if (!badWords.includes(message)) {
+  if (!badWords.includes(message.trim().toLowerCase())) {
     return io.emit(events.SEND_MESSAGE, { message, id: socket.id });
   }
 
