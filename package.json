@@ -15,8 +15,10 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "koa": "^2.13.0",
     "koa-static": "^5.0.0",
+    "rate-limiter-flexible": "^2.1.10",
     "socket.io": "^2.3.0"
   }
 }

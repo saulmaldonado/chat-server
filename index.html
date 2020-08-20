@@ -17,14 +17,21 @@
       const input = document.getElementById('input');
       const form = document.getElementById('form');
 
+      socket.on('BAD_WORD', (msg) => {
+        console.log(msg);
+      });
+
+      socket.on('SEND_MESSAGE', (message) => {
+        const chat = document.getElementById('chat');
+        const messageContainer = document.createElement('li');
+        messageContainer.appendChild(document.createTextNode(input.value));
+        chat.appendChild(messageContainer);
+      });
+
       form.addEventListener('submit', (event) => {
         event.preventDefault();
         if (input.value) {
           socket.emit('SEND_MESSAGE', input.value);
-          const chat = document.getElementById('chat');
-          const message = document.createElement('li');
-          message.appendChild(document.createTextNode(input.value));
-          chat.appendChild(message);
         }
       });
     </script>
