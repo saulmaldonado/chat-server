@@ -1,0 +1,20 @@
+{
+  "name": "chat-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsnd --respawn index.ts"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.4",
+    "@types/node": "^14.6.0",
+    "@types/socket.io": "^2.1.11",
+    "ts-node-dev": "^1.0.0-pre.58",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "koa": "^2.13.0",
+    "socket.io": "^2.3.0"
+  }
+}
