@@ -1,5 +1,5 @@
 import koa from 'koa';
-import { createServer } from 'http';
+import { createServer, Server } from 'http';
 import socketio, { Socket } from 'socket.io';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { config } from 'dotenv';
@@ -31,9 +31,13 @@ const rateLimit = async (socket: Socket) => {
   }
 };
 
-const filterMessage = async (message: string, socket: Socket) => {
+const filterMessage = async (
+  message: string,
+  socket: Socket,
+  io: socketio.Server
+) => {
   if (!badWords.includes(message)) {
-    return socket.emit(events.SEND_MESSAGE, message);
+    return io.emit(events.SEND_MESSAGE, message);
   }
 
   return socket.emit('BAD_WORD', "you can't say that");
@@ -44,7 +48,7 @@ io.on('connection', async (socket: Socket) => {
   console.log('a new user connected');
   socket.on(events.SEND_MESSAGE, async (message: string) => {
     await rateLimit(socket);
-    await filterMessage(message, socket);
+    await filterMessage(message, socket, io);
   });
 });
 
