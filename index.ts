@@ -21,7 +21,7 @@ const rateLimiter = new RateLimiterMemory({
   duration: 1,
 });
 
-app.use(koaStatic(__dirname));
+// app.use(koaStatic(__dirname));
 
 // helper methods
 const rateLimit = async (socket: Socket) => {
