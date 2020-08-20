@@ -34,10 +34,15 @@ const rateLimit = async (socket: Socket) => {
 const filterMessage = async (
   message: string,
   socket: Socket,
-  io: socketio.Server
+  io: socketio.Server,
+  price?: number
 ) => {
   if (!badWords.includes(message.trim().toLowerCase())) {
-    return io.emit(events.SEND_MESSAGE, { message, id: socket.id });
+    return io.emit(events.SEND_MESSAGE, {
+      message,
+      id: socket.id,
+      price,
+    });
   }
 
   return socket.emit('BAD_WORD', "you can't say that");
@@ -48,10 +53,10 @@ io.on('connection', async (socket: Socket) => {
   console.log('a new user connected');
   socket.on(
     events.SEND_MESSAGE,
-    async (message: string | ArrayBuffer) => {
+    async (message: string | ArrayBuffer, price?: number) => {
       await rateLimit(socket);
       if (typeof message === 'string') {
-        await filterMessage(message, socket, io);
+        await filterMessage(message, socket, io, price);
       } else {
         io.emit(events.SEND_MESSAGE, { message, id: socket.id });
       }
