@@ -35,7 +35,7 @@ const filterMessage = async (
   message: string,
   socket: Socket,
   io: socketio.Server,
-  price?: number
+  price: number | null
 ) => {
   if (!badWords.includes(message.trim().toLowerCase())) {
     return io.emit(events.SEND_MESSAGE, {
@@ -53,7 +53,7 @@ io.on('connection', async (socket: Socket) => {
   console.log('a new user connected');
   socket.on(
     events.SEND_MESSAGE,
-    async (message: string | ArrayBuffer, price?: number) => {
+    async (message: string | ArrayBuffer, price: number | null) => {
       await rateLimit(socket);
       if (typeof message === 'string') {
         await filterMessage(message, socket, io, price);
