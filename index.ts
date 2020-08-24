@@ -12,7 +12,7 @@ config();
 const app = new koa();
 
 const server = createServer(app.callback());
-const io = socketio(server);
+const io = socketio(server, { serveClient: false });
 
 // rate limiter
 const rateLimiter = new RateLimiterMemory({

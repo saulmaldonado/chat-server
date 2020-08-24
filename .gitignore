@@ -3,3 +3,4 @@
 !*.secret
 badwords.json
 .env
+dist/
